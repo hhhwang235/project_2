@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="mybatis.mapper.mybatis-mapper">
+	<sql id="BaseColumns">
+		student_no AS studentNo,
+		student_name AS studentName,
+		student_tel AS studentTel,
+		student_email AS studentEmail,
+		student_addr AS studentAddr,
+		reg_date AS studentRegDate
+	</sql>
+	
+	<select id="selectCommentByPrimaryKey" parameterType="Long" resultType="mybatis.dto.Comment">
+		SELECT
+			<include refid="BaseColumns"/>
+		FROM student
+		WHERE student_no = #{studentNo}
+	</select>
+	
+	<insert id="insertMember" parameterType="mybatis.dto.MemberDTO">
+		INSERT INTO members VALUES 
+					(#{userId}, #{pwd}, #{name}, #{gender}, #{birthyy}, #{birthmm}, #{birthdd}, #{email1}, #{email2}, #{phone}, #{address}, #{reg}, #{tag}, #{mImage}, #{mMemo})   
+	</insert>
+	
+	<select id = "loginCheck1" resultType = "String" parameterType="String">
+		SELECT user_id AS userId FROM members
+			WHERE  USER_ID  = #{MemberDTO.userId}
+	</select>
+	
+	<select id = "loginCheck2" resultType = "String" parameterType="String">
+		SELECT PWD AS pwd FROM members
+			WHERE  USER_ID  = #{MemberDTO.userId}
+	</select>
+	
+	<select id = "tagCheck" resultType = "String" parameterType="String">
+		SELECT tag
+		FROM members
+		WHERE user_id  = #{MemberDTO.userId}
+	</select>
+	
+	<select id="memberOne" parameterType = "String" resultType="MemberDTO">
+		SELECT 
+		USER_ID as userId,
+		PWD as pwd,
+		NAME as name,
+		GENDER as gender,
+		BIRTHYY as birthyy,
+		BIRTHMM as birthmm,
+		BIRTHDD as birthdd,
+		EMAIL1 as email1,
+		EMAIL2 as email2,
+		PHONE as phone,
+		ADDRESS as address,
+		REG as reg,
+		tag as tag,
+		m_image as mImage,
+		m_memo as mMemo
+		FROM members
+		WHERE USER_ID = #{userId}
+		
+	</select>
+	
+	<update id="memberUpdate" parameterType="MemberDTO">
+		UPDATE members 
+		SET 
+			PWD = #{pwd},
+			EMAIL1 = #{email1},
+			EMAIL2 = #{email2},
+			PHONE = #{phone},
+			ADDRESS = #{address},
+			m_memo = #{mMemo}
+			
+		WHERE USER_ID = #{userId}
+	</update> 
+	
+	<delete id="memberDelete" parameterType="String">
+		DELETE FROM members WHERE USER_ID = #{userId}
+	</delete>	
+	
+	<select id="boardSearchAll" resultType="BoardDTO">
+		SELECT * FROM tblBoard ORDER BY b_num DESC
+	</select>
+	
+	<insert id="boardInsert" parameterType="BoardDTO">
+		INSERT INTO tblBoard
+		VALUES(#{b_num },
+				#{b_file},
+				#{b_subject },
+				#{b_pwd },
+				#{b_content },
+				#{b_writer},
+				SYSDATE(),
+				0)
+	</insert>
+	
+	<select id="boardDetail" parameterType="String" resultType="BoardDTO">
+		SELECT * FROM tblBoard WHERE b_num = #{b_num}
+	</select>
+	
+	<update id="boardCount" parameterType="String">
+		UPDATE tblBoard SET b_readcount = b_readcount + 1 WHERE b_num = #{b_num}
+	</update>
+
+	<delete id="boardDelete" parameterType="String">
+		DELETE FROM tblBoard WHERE b_num = #{b_num}
+	</delete>	
+		
+	<update id="boardUpdate" parameterType="BoardDTO">
+		UPDATE tblBoard 
+		SET 
+			b_file = #{b_file},
+			b_subject = #{b_subject},
+			b_pwd = #{b_pwd},
+			b_content = #{b_content}
+
+		WHERE b_num = #{b_num}
+	</update> 
+	
+	<select id="boardSearch" parameterType="SearchDTO" resultType="BoardDTO">
+		SELECT * FROM tblBoard WHERE UPPER(${part}) LIKE UPPER(#{searchData})
+	</select>
+	
+	<insert id="commentInsert" parameterType="tblCommentDTO">
+		INSERT INTO tblComment
+		VALUES(
+				#{c_num },
+				#{c_commenter },
+				#{c_content },
+				SYSDATE()
+				)
+	</insert>
+	
+	<select id="commentSelect" parameterType="Integer" resultType="tblCommentDTO">
+		SELECT * FROM tblComment WHERE c_num = #{c_num}
+	</select>
+	
+	<select id="goodsSearchAll" resultType="GoodsDTO">
+		SELECT 
+		g_commenter AS gCommenter,
+		g_num AS gNum,
+		g_name AS gName,
+		g_amount AS gAmount,
+		g_price AS gPrice,
+		g_memo AS gMemo,
+		g_image AS gImage
+		FROM goods
+	</select>
+	
+	<select id="goodsSearch" parameterType="String" resultType="GoodsDTO">
+		SELECT 
+		g_commenter AS gCommenter,
+		g_num AS gNum,
+		g_name AS gName,
+		g_amount AS gAmount,
+		g_price AS gPrice,
+		g_memo AS gMemo,
+		g_image AS gImage
+		FROM goods 
+		where g_commenter = #{gCommenter}
+	</select>
+	
+	<insert id="goodsInsert" parameterType="GoodsDTO">
+		INSERT INTO goods
+		VALUES(
+				#{gCommenter },
+				#{gNum },
+				#{gName },
+				#{gAmount },
+				#{gPrice },
+				#{gMemo },
+				#{gImage }
+				)
+	</insert>
+	
+	<select id="goodsDetail" parameterType="Integer" resultType="GoodsDTO">
+		SELECT 
+		g_commenter AS gCommenter,
+		g_num AS gNum,
+		g_name AS gName,
+		g_amount AS gAmount,
+		g_price AS gPrice,
+		g_memo AS gMemo,
+		g_image AS gImage 
+		FROM goods 
+		WHERE g_num = #{gNum}
+	</select>
+	
+	<update id="goodsAmountUpdate" parameterType="GoodsDTO">
+		UPDATE goods 
+		SET g_amount = #{gAmount}
+		WHERE g_num = #{gNum}
+	</update> 
+	
+	<delete id="goodsDelete" parameterType="String">
+		DELETE FROM goods WHERE g_num = #{gNum}
+	</delete>	
+		
+	<select id = "cartInsert" parameterType="CartDTO">
+		INSERT INTO cart values (#{num}, SYSDATE(), #{cNum}, #{cMembers}, #{amount})
+	</select>
+	
+	<resultMap type="testDTO" id="Goods">
+    <result column="g_name" property="name"/>
+    <result column="g_price" property="price"/>
+    <result column="g_image" property="image"/>
+    <result column="g_commenter" property="commenter"/>
+	</resultMap>
+ 
+	<resultMap type="testDTO" id="Cart">
+    <result column="c_members" property="member"/>
+    <result column="c_reg" property="reg"/>
+    <result column="amount" property="amount"/>
+    <collection property="Goods" resultMap="Goods"/>
+	</resultMap>
+	
+	<select id="cartSelect" parameterType="String" resultType="testDTO">
+		SELECT 
+		a.c_members as member,
+		b.g_name as name,
+		b.g_price as price, 
+		b.g_image as image,
+		b.g_commenter as commenter,
+		a.c_reg as reg,
+		a.amount as amount
+		FROM cart a JOIN goods b ON a.c_num = b.g_num
+		WHERE a.c_members = #{member}
+	</select>
+	
+	<delete id="cartClear" parameterType="String">
+		DELETE FROM cart WHERE c_members = #{cMembers}
+	</delete>	
+	
+	<select id="visitantAll" resultType="Integer">
+		SELECT visit as visit 
+		FROM visitant
+	</select>
+	
+	<update id="visitantUpdate" parameterType="Integer">
+		UPDATE visitant SET visit = visit + 1 WHERE num = #{num}
+	</update>
+	
+	<select id="portAll" resultType="PortDTO">
+		SELECT 
+		 p_name as pName,
+		 p_memo as pMemo,
+		 p_price as pPrice
+		FROM port
+	</select>
+	
+	<insert id="ordersInsert" parameterType="OrdersDTO">
+		INSERT INTO orders
+		VALUES(
+				#{oMainNum },
+				#{oMembers },
+				#{oName },
+				#{oAddress },
+				#{oPhone },
+				#{oPort },
+				#{oProtMessage },
+				#{oNum },
+				#{oAmount },
+				#{oSumPrice },
+				#{oReg }
+				)
+	</insert>
+	
+	<select id="orderDetail" parameterType="String" resultType="OrderDetailDTO">
+		SELECT 
+		b.g_image as gImage,
+		b.g_name as gName,
+		b.g_commenter as gCommenter,
+		a.o_members as oMembers,
+		a.o_name as oName,
+		a.o_address as oAddress,
+		a.o_phone as oPhone,
+		a.o_port as oPort,
+		a.o_portMessage as oPortMessage,
+		b.g_price as gPrice,
+		a.o_amount as oAmount,
+		a.o_sumPrice as oSumPrice,
+		a.o_reg as oReg
+		FROM orders a JOIN goods b ON a.o_num = b.g_num
+		WHERE a.o_members = #{oMembers}
+		ORDER BY a.o_reg DESC
+	</select>
+	
+	<insert id="orderDetailInsert" parameterType="orderDetailDTO">
+		INSERT INTO orderDetail	
+		VALUES(
+		#{gImage},
+		#{gName},
+		#{gCommenter},
+		#{oMembers},
+		#{oName},
+		#{oAddress},
+		#{oPhone},
+		#{oPort},
+		#{oPortMessage},
+		#{gPrice},
+		#{oAmount},
+		#{oSumPrice},
+		#{oReg}
+		)
+	</insert>
+	
+	<select id="orderDetailAll" parameterType="String" resultType="OrderDetailDTO">
+		SELECT 
+		image as gImage,
+		gname as gName,
+		commenter as gCommenter,
+		members as oMembers,
+		oname as oName,
+		address as oAddress,
+		phone as oPhone,
+		port as oPort,
+		portMessage as oPortMessage,
+		price as gPrice,
+		amount as oAmount,
+		sumPrice as oSumPrice,
+		reg as oReg
+		FROM orderDetail
+		WHERE members = #{oMembers}
+		ORDER BY reg DESC
+	</select>
+	
+	<select id="orderPriceSum" parameterType="String" resultType="Integer">
+		SELECT sum(sumPrice) as oSumPrice
+		FROM orderDetail
+		WHERE members = #{oMembers}
+	</select>
+	
+	<select id="gradeDetail" resultType="GradeDTO">
+		SELECT 
+		grade_name as gradeName,
+		grade_memo as gradeMemo,
+		grade_MinScore as gradeMinScore,
+		grade_MaxScore as gradeMaxScore,
+		grade_image as gradeImage
+		FROM grade
+	</select>
+	
+	<insert id="LatitudeLongitudeInsert" parameterType="LatitudeLongitudeDTO">
+		INSERT INTO LatitudeLongitude	
+		VALUES(
+		#{lMembers},
+		#{latitude},
+		#{longitude}
+		)
+	</insert>
+	
+	<select id="LatitudeLongitudeSelect" parameterType="String" resultType="LatitudeLongitudeDTO">
+		SELECT 
+		l_members as lMembers,
+		latitude as latitude,
+		longitude as longitude
+		FROM LatitudeLongitude
+		where l_members = #{lMembers}
+	</select>
+	
+	<select id="LatitudeLongitudeSelectTest" parameterType="String" resultType="String">
+		SELECT l_members
+		FROM LatitudeLongitude
+		where l_members = #{lMembers};
+	</select>
+	
+	<select id="portInfoSelect" resultType="portInfoDTO">
+		SELECT 
+		a.p_comapny_name as pCompanyName,
+		a.p_company_phone as pCompanyPhone,
+		a.p_company_address as pCompanyAddress,
+		b.PORTDEPART_name as PORTDEPARTName,
+		b.PORTDEPART_phone as PORTDEPARTPhone,
+		b.PORTDEPART_address as PORTDEPARTAddress
+		FROM PORTCOMPANY a, PORTCOMPANYDEPART b
+		where a.p_comapny_name = b.p_comapny_name
+	</select>
+	
+	
+	<select id="portInfoSelectCase" parameterType="String" resultType="PortSelectDTO">
+		SELECT 
+		a.p_comapny_name as pCompanyName,
+		b.PORT_PRICE as portPrice,
+		c.ExcludedAREAPRICE as excludedAreaPrice
+		FROM PORTCOMPANY a, PORTSYSTEM b, ExcludedAREAPRICE c 
+		where a.p_comapny_name = b.p_comapny_name 
+			and b.PORTSYSTEM_NUM = c.PORTSYSTEM_NUM and b.portway_name = #{portwayName}
+	</select>
+	
+</mapper>
+
+

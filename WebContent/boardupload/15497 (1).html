@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+		<title>#15497: java.lang.ClassCastException when trying to connect to MySQL DB on non-standard port (?) | Aqua Data Studio</title>
+		<meta property="og:title" content="#15497: java.lang.ClassCastException when trying to connect to MySQL DB on non-standard port (?) | Aqua Data Studio"/>
+		<meta name="description" content="When I try to connect to a MySQL DB I get a java.lang.ClassCastException. In particular a MySQL DB listening on port 3301.  
+See attached for system info. Stack trace below. I can connect from MySQL Workbench. I have successfully connected to other MySQL DBs on port 3306. I encountered this on version 16.04, which is what I am licensed for, so I dl&#039;d 18.5 and installed it to try to duplicate, and I did. So this 18.5 installation is brand new, this was the first connection I tried. 
+java.sql.SQLE..."/><meta name="robots" content="noodp,noydir"/>
+			<meta property='og:image' content='https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497/attachment/2478947D-CC03-41A9-C27C-F478453C87D3/MySQL-DB-properties-PNG'/>
+<meta property='og:image' content='https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497/attachment/30D0D0E5-6B24-BEE4-3570-91FC8F0099F9/Aqua-Info-4-PNG'/>
+<meta property='og:image' content='https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497/attachment/4A90A863-92E8-66EA-96D9-4D56DFE65DF4/Aqua-Info-2-PNG'/>
+<meta property='og:image' content='https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497/attachment/BB24ACC5-E655-CB50-E576-6BD605E944FE/Aqua-info-3-PNG'/>
+<meta property='og:image' content='https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497/attachment/E828112D-6CE9-D1B6-853A-FF5999400E34/Aqua-info-1-PNG'/>
+<meta property='og:image' content='https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497/attachment/0B81E8B8-E14B-0910-E86F-2C3CBFB01413/MySQL-info-PNG'/>
+<link rel="icon" type="image/x-icon" href="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/aquaclusters.ico">
+		<link rel="shortcut icon" type="image/x-icon" href="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/aquaclusters.ico">
+		<link rel="stylesheet" type="text/css" href="/style/f5f323048f321b8b0590a300994d6ee0/v2/jquery-ui/custom/jquery-ui.custom.css">
+
+		<link rel="stylesheet" type="text/css" href="/style/f5f323048f321b8b0590a300994d6ee0/v2/application.css">
+		<script type="text/javascript" src="/js/f5f323048f321b8b0590a300994d6ee0/v2/app-and-lib.min.js"></script>
+		<script type="text/javascript">
+			$j.extend(Application.prototype, {
+				fingerprint : 'f5f323048f321b8b0590a300994d6ee0',
+		      iconUrl : '/images/f5f323048f321b8b0590a300994d6ee0/icons',
+				styleUrl : '/style/f5f323048f321b8b0590a300994d6ee0',
+				jsUrl : '/js/f5f323048f321b8b0590a300994d6ee0',
+				language : 'ko_KR',
+				userId : '-1',
+				username: '@Anonymous',
+				baseUrl: '/app/home/project/public/aquadatastudio/issue/15497',
+				siteUrl: 'https://www.aquaclusters.com',
+				ajaxMethod: '',
+				ajaxParams: ''
+			});
+			app.setMsg('labelOK', '확인');
+			app.setMsg('labelCancel', '취소');
+			app.setMsg('labelError', '오류');
+			app.setMsg('labelClose', '닫기');
+			app.setMsg('labelLogin', '로그인 하기');
+			app.setMsg('labelMustMatch', '{0} 와 {1}는 일치하여야 합니다.');
+			app.setMsg('labelPleaseEnterA', '{0}에 값을 입력하십시오.');
+			app.setMsg('labelPleaseEnterMinimum', '{0}에 최소 {1}자 이상을 입력하십시오.');
+			app.setMsg('labelExceededBy', '{0}안의 값이 최대 허용길이를 {1}글자 초과하였습니다.');
+			app.setMsg('labelDeleted', '삭제됨');
+			app.setMsg('labelUnableToProcess', '현재 요청사항을 실행할 수 없습니다. 나중에 다시 시도하십시오.');
+			app.setMsg('labelLoadingMsg', '로드 중...');
+			var RecaptchaOptions = {theme : 'custom', custom_theme_widget: 'recaptcha_widget'};
+		</script>
+	</head>
+	<body >
+		<div class="navbar navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container-fluid">
+			<div>
+				<ul class="nav">
+					<li class=""><a  href="/public/explore">프로젝트 탐색하기</a></li>
+					</ul>
+				<ul class="nav pull-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">&nbsp;<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li>
+									<a href="/app/change-locale?locale=en_US&url=https%3A%2F%2Fwww.aquaclusters.com%2Fapp%2Fhome%2Fproject%2Fpublic%2Faquadatastudio%2Fissue%2F15497">
+										<i class="icon-holder"></i>&nbsp;English (US)</a>
+								</li>
+							<li>
+									<a href="/app/change-locale?locale=de&url=https%3A%2F%2Fwww.aquaclusters.com%2Fapp%2Fhome%2Fproject%2Fpublic%2Faquadatastudio%2Fissue%2F15497">
+										<i class="icon-holder"></i>&nbsp;Deutsch</a>
+								</li>
+							<li>
+									<a href="/app/change-locale?locale=es&url=https%3A%2F%2Fwww.aquaclusters.com%2Fapp%2Fhome%2Fproject%2Fpublic%2Faquadatastudio%2Fissue%2F15497">
+										<i class="icon-holder"></i>&nbsp;Español</a>
+								</li>
+							<li>
+									<a href="/app/change-locale?locale=fr&url=https%3A%2F%2Fwww.aquaclusters.com%2Fapp%2Fhome%2Fproject%2Fpublic%2Faquadatastudio%2Fissue%2F15497">
+										<i class="icon-holder"></i>&nbsp;Français</a>
+								</li>
+							<li>
+									<a href="/app/change-locale?locale=pt&url=https%3A%2F%2Fwww.aquaclusters.com%2Fapp%2Fhome%2Fproject%2Fpublic%2Faquadatastudio%2Fissue%2F15497">
+										<i class="icon-holder"></i>&nbsp;Português</a>
+								</li>
+							<li>
+									<a href="/app/change-locale?locale=ja&url=https%3A%2F%2Fwww.aquaclusters.com%2Fapp%2Fhome%2Fproject%2Fpublic%2Faquadatastudio%2Fissue%2F15497">
+										<i class="icon-holder"></i>&nbsp;日本語</a>
+								</li>
+							<li>
+									<a href="/app/change-locale?locale=zh_CN&url=https%3A%2F%2Fwww.aquaclusters.com%2Fapp%2Fhome%2Fproject%2Fpublic%2Faquadatastudio%2Fissue%2F15497">
+										<i class="icon-holder"></i>&nbsp;简体中文</a>
+								</li>
+							<li>
+									<a href="/app/change-locale?locale=zh_TW&url=https%3A%2F%2Fwww.aquaclusters.com%2Fapp%2Fhome%2Fproject%2Fpublic%2Faquadatastudio%2Fissue%2F15497">
+										<i class="icon-holder"></i>&nbsp;繁體中文</a>
+								</li>
+							<li>
+									<a href="/app/change-locale?locale=ko&url=https%3A%2F%2Fwww.aquaclusters.com%2Fapp%2Fhome%2Fproject%2Fpublic%2Faquadatastudio%2Fissue%2F15497">
+										<i class="icon-holder"></i>&nbsp;한국어</a>
+								</li>
+							</ul>
+					</li>
+					<li><span class="btn create-account-btn" onclick="parent.location='/app/register/self-signup'">무료 계정 생성</span></li>
+						<li><a href="/app/login?requestedUrl=%2Fapp%2Fhome%2Fproject%2Fpublic%2Faquadatastudio%2Fissue%2F15497">로그인 하기</a></li>
+						</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid topbar ">
+	<div>
+		<ul class="pull-left">
+			<li><a href="/"><img src="/images/f5f323048f321b8b0590a300994d6ee0/logo/logo-slim.png" alt="AquaClusters" title="AquaClusters by AquaFold (19.0.2-4) build 55855&nbsp;2018-May-31 04:24:31 PM" border="0"/></a></li>
+			<li><form class="form-inline search" action="/app/home/project/public/aquadatastudio/issue" method="get" name="search">
+	<div class="btn-group">
+		<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+			<span class="area">이슈</span>&nbsp;<span class="caret"></span>
+		</a>
+		<ul class="dropdown-menu">
+			<li>
+					<a href="javascript:void(0)"
+					   onclick="app.setSearchArea('\uC774\uC288', '\/app\/home\/project\/public\/aquadatastudio\/issue', '\/ajax\/home\/project\/public\/aquadatastudio\/issue\/filter\/new', '', '')">
+						<i class="icon-ok"></i>&nbsp;이슈</a>
+				</li>
+			<li>
+					<a href="javascript:void(0)"
+					   onclick="app.setSearchArea('\uC704\uD0A4 \uCC45', '\/app\/home\/project\/public\/aquadatastudio\/wikibook\/action\/search', '\/ajax\/home\/project\/public\/aquadatastudio\/wikibook\/search-options', '', '')">
+						<i class="icon-holder"></i>&nbsp;위키 책</a>
+				</li>
+			<li>
+					<a href="javascript:void(0)"
+					   onclick="app.setSearchArea('\uD1A0\uB860', '\/app\/home\/project\/public\/aquadatastudio\/discussion\/action\/search', '\/ajax\/home\/project\/public\/aquadatastudio\/discussion\/search-options', '', '')">
+						<i class="icon-holder"></i>&nbsp;토론</a>
+				</li>
+			<li>
+					<a href="javascript:void(0)"
+					   onclick="app.setSearchArea('\uB2F5\uBCC0', '\/app\/home\/project\/public\/aquadatastudio\/answer\/search', '\/ajax\/home\/project\/public\/aquadatastudio\/answer\/search-options', '', '')">
+						<i class="icon-holder"></i>&nbsp;답변</a>
+				</li>
+			<li>
+					<a href="javascript:void(0)"
+					   onclick="app.setSearchArea('\uACF5\uAC1C \uD504\uB85C\uC81D\uD2B8', '\/public\/explore\/search', '\/ajax\/public\/explore\/search-options', '', '')">
+						<i class="icon-holder"></i>&nbsp;공개 프로젝트</a>
+				</li>
+			</ul>
+	</div><span class="input-append"><div class="filter"><span class="label enhanced-label label-info hide"></span><input
+		  class="span4"
+		  type="text"
+		  name="filter.query"
+		  value=""
+		  placeholder="검색"
+		  onfocus="$j(this).parents('.filter').addClass('filter-focus')"
+		  onblur="$j(this).parents('.filter').removeClass('filter-focus')"
+		  maxlength="100"/><span
+		  class="options"
+		  rel='tooltip'
+		  title="검색 옵션"><span class="caret"></span></span></div><img
+		  class="add-on"
+		  id="add-on-49902748"
+		  src="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/actions/search.png"
+		  onclick="$j(this).parents('form.search').submit()"/>
+	</span>
+	</form>
+<span id="search-tips" class="hide">
+<span class="hidden init-hovercard hovercard-source" data-hc-link="#add-on-49902748" data-hc-func="getTipsDetail">
+	<h4>검색 팁</h4>
+		<div class="combo-box-hr"><hr/></div>
+	<p class="issue-specific-tips">검색을 통해 이슈를 손쉽게 찾아보세요: <b>#&lt;&#51060;&#49800; ID&gt;</b><br/>예시: #1832</p>
+	<p class="member-specific-tips">다음의 검색으로 회원을 쉽게 찾으세요: <b>&lt;&#49324;&#50857;&#51088; &#51060;&#47492;&gt;</b>, <b>&lt;&#47749;&gt;</b> 와 <b>&lt;&#49457;&gt;</b>.<br/><br/>예시:  <b>smith</b>를 검색하면, <b>smith</b> 와 <b>adamsmith</b>의 검색결과를 가져옵니다.</p>
+	<div class="solr-search-tips">
+	다음을 사용하실수 있습니다:<ul>
+		<li>부울 연산자 AND, OR 및 NOT (대문자이어야함, 예. Oracle AND 디버거, 디버거 NOT Oracle)</li>
+		<li>한문자와 복수문자 와일드카드 (e.g. de?ug, 디버그*)</li>
+		<li>분류중 (예.   ((오라클 디버거) AND 예외))</li>
+		<li>인용 구 (e.g. "Oracle Debugger")</li>
+		</ul>
+	</div>
+</span></span>
+<script language="javascript">
+	$j(function () {
+		app.setMsg('labelIssues', '이슈');
+		app.setMsg('labelMembers', '회원');
+		app.setSearchArea('\uC774\uC288', '\/app\/home\/project\/public\/aquadatastudio\/issue', '\/ajax\/home\/project\/public\/aquadatastudio\/issue\/filter\/new', '', '');
+	});
+
+	function getTipsDetail() {
+		return $j('.hovercard-source', '#search-tips').html();
+	}
+</script>
+
+</li>
+			</ul>
+		</div>
+</div>
+<script type="text/javascript">
+	function dismissBroadcastMessage(msgId) {
+		$j("#broadcast-message-div").removeClass("show").addClass("hide");
+		$j.getJSON('/public/ajax/broadcast/dismiss/' + msgId, {}, function(json) {});
+	}
+</script>
+<div id="broadcast-message-div" class="container-fluid broadcast-message alert hide">
+	<div>
+		<a href="#" class="close" title="해제하기" onclick="dismissBroadcastMessage('')">&times;</a>
+		<span>
+			<strong>알려드립니다!</strong>
+			<span id="broadcast-message"></span>
+		</span>
+	</div>
+</div>
+<noscript>
+			<style>#loadingpage {display:none}</style><br>
+			<b>JavaScript and Cookies must be enabled in order for you to use AquaClusters.</b><br>
+			Either JavaScript or Cookies is disabled or your browser doesn't support them.<br>
+			If you enable JavaScript and Cookies you can try again by clicking <a href="">here</a>.<br>
+		</noscript>
+		<div id="userHoverCard" class="ac-hovercard">
+	<table>
+		<tbody>
+			<tr>
+				<td valign="top"><div class="size-large centered-image"><img class="user-img centered-image" src=""/></div></td>
+				<td width="10px"></td>
+				<td valign="top">
+					<div class="title"><a class="title-link"></a></div>
+					<div class="body"></div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div id="customHoverCard" class="ac-hovercard">
+</div>
+<div class="container-maxwidth">
+	<div class="midbar">
+		<div class="midbar-logo" >
+			<div class="size-large centered-image" style="display:inline-block">
+	<img class="centered-image" src="/app/home/project/02811EE3-3AE6-750A-B806-DE54E58E860F/logo/1311150664000" alt="Aqua Data Studio"/>
+		</div>
+</div>
+		<div class="midbar-info">
+			<table>
+				<tbody>
+				<tr>
+					<td>
+						<h3>
+								<i class="asprite_project_public project-midbar-icon" alt="공개 프로젝트" title="공개 프로젝트"></i>
+								<a href="/app/home/project/public/aquadatastudio/dashboard">Aqua Data Studio</a>
+								<span>/</span>
+								<span class="init-hovercard"
+				   
+						data-user-title="nhilam"
+				      data-user-userurl="/public/people/nhilam"
+						  
+								  data-user-cardimgsrc="/app/home/user/3A10E5CF-A3A7-BC59-86EE-7B4100BD5E7F/logo/1312830817000"
+							  
+				      data-user-detailshtml='<div class="subtitle">Nhi Lam</div><strong>521</strong> 유명도 점수<div class="gray-text"></div>'><a 
+				                                          href="/public/people/nhilam">nhilam</a></span>
+			</h3>
+						</td>
+					<td width="5%" nowrap="nowrap">
+						<div class="project-btns">
+							<a id="projectWatchLink-02811EE3-3AE6-750A-B806-DE54E58E860F" class="btn btn-small"
+   
+   onclick="app.actionProjectWatch('/ajax/home/project/public/aquadatastudio/follow?always=true', 'projectWatchLink-02811EE3-3AE6-750A-B806-DE54E58E860F', 'followers-02811EE3-3AE6-750A-B806-DE54E58E860F')"
+   rel="tooltip"
+   data-original-title="이 프로젝트를 팔로잉하여 변경사항에 대한 알림내용을 귀하의 홈페이지상에서 확인해보세요.">
+	<i class="asprite_follow_start"></i>
+	따라가기</a>
+<span class="like-count"
+							      id="followers-02811EE3-3AE6-750A-B806-DE54E58E860F" data-count="826"
+							      data-allow="true"
+							      onclick="showProjectFollowers(this, '02811EE3-3AE6-750A-B806-DE54E58E860F');"
+							      rel="tooltip" data-placement="bottom" title="826명의 팔로어">
+								826</span>
+						</div>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			<div class="proj-desc">
+				IDE for Relational Databases</div>
+		</div>
+	</div>
+	<ul class="nav nav-tabs">
+		<li class=""><a href="/app/home/project/public/aquadatastudio/dashboard">대시보드</a></li>
+		<li class="active"><a href="/app/home/project/public/aquadatastudio/issue">이슈</a></li>
+		<li class=""><a href="/app/home/project/public/aquadatastudio/wikibook">위키 책</a></li>
+		<li class=""><a href="/app/home/project/public/aquadatastudio/discussion">토론</a></li>
+		<li class=""><a href="/app/home/project/public/aquadatastudio/answer">답변</a></li>
+		</ul>
+	<script type="text/javascript" src="/js/f5f323048f321b8b0590a300994d6ee0/v2/project/users.js"></script>
+	<script type="text/javascript">
+		app.setMsg('labelFollow', '따라가기');
+		app.setMsg('labelStopFollowing', '팔로잉 중단하기');
+		app.setMsg('descriptionFollowProject', '이 프로젝트를 팔로잉하여 변경사항에 대한 알림내용을 귀하의 홈페이지상에서 확인해보세요.');
+		app.setMsg('descriptionStopFollowProject', '귀하의 홈페이지상에서 업데이트를 보지않기위해 이 프로젝트 팔로잉하기를 중단하기');
+		app.setMsg('labelStarred', '별점을 받음');
+		app.setMsg('labelNotStarred', '별점이 없음');
+		app.setMsg('labelStar', '별점');
+		app.setMsg('labelUnStar', '별점 삭제');
+
+		function showProjectFollowers(link, projectId) {
+		
+			if ($j(link).data('allow') && $j(link).data('count') > 0)
+				app.showUsersDialog({
+					ajaxUrl:"/ajax/home/project/public/aquadatastudio/follower-list"
+				});
+		
+		}
+	</script>
+</div>
+<div id="confirm-msgbox" class="modal hide">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">&times;</a>
+		<h3 id="confirm-msgbox-title">Title</h3>
+		<span id="confirm-msgbox-subtitle" class="subtitle"></span>
+	</div>
+	<div class="modal-body" id="confirm-msgbox-body">
+		<p>Are you sure you want to perform this operation?</p>
+	</div>
+	<div class="modal-footer">
+		<a id="confirm-msgbox-cancel" class="btn" data-dismiss="modal">취소</a>
+		<a id="confirm-msgbox-primary-action" class="btn btn-primary">확인</a>
+	</div>
+</div>
+<script type="text/javascript">
+	$j('#confirm-msgbox-cancel').bind('keydown',
+		function(e) {
+			if (e.which==13)
+				app.hideModalDialog();
+			else if (e.which==9) {
+				var firstField = $j('#confirm-msgbox').data('firstField');
+				if (firstField)
+					setTimeout(function(){app.putFocus(firstField);}, 10);
+				else
+					setTimeout(app.setModalFocus, 10);
+			}
+		}
+	);
+</script>
+<div class="container-maxwidth">
+	<div class="btnbar-tab">
+		<ul class="pull-left">
+			<li>
+				<a id="backToListButton" class="btn" rel="tooltip" title="목록으로 돌아가기" href="/app/home/project/public/aquadatastudio/issue"><i class="icon-arrow-left"></i>&nbsp;뒤로</a>
+			</li>
+			</ul>
+		</div>
+</div>
+<div class="container">
+<div id="issueStatusMessage">
+			<div class="alert hide">
+				<a class="close" data-dismiss="alert" href="#">&times;</a>
+				</div>
+		</div>
+	<div id="error-message" class="alert alert-error hide"></div>
+	<div class="row view-object-container" >
+<div class="span10">
+<!--View issue Row-->
+<div class="row">
+	<div class="span1 align-right">
+		<a id="49902749" class="poster" href="/app/profile/tspitzer">
+			<div class="size-medium centered-image" style="display:inline-block">
+	<img  class="centered-image" src="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/objects/user/empty_profile_48by48.png" alt="Tom Spitzer"/>
+		</div>
+</a>
+	</div>
+	<div class="span9">
+		<div class="modify-inline-container hide" id="modifyIssueSection"></div>
+		<div class="view-object-card">
+			<div class="view-object-header">
+				<span class="creator">
+	<b><span class="init-hovercard"
+				   data-user-link2="#49902749"
+						data-user-title="tspitzer"
+				      data-user-userurl="/public/people/tspitzer"
+						  
+								  data-user-cardimgsrc="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/objects/user/empty_profile_64by64.png"
+							  
+				      data-user-detailshtml='<div class="subtitle">Tom Spitzer</div><strong>1</strong> 유명도 점수<div class="gray-text"></div>'><a 
+				                                          href="/public/people/tspitzer">tspitzer</a></span>
+			</b><span class="modified">보고됨</span>
+	<span class="timestamp value" data-date="2017. 12. 7" data-time="오후 9:25" rel="tooltip" title="2017년 12월 7일 (목) 오후 9:25:02 (GMT+0000)">
+		2017-12-07T21:25:02Z</span>
+		
+				&nbsp;&middot;&nbsp;<span class="modified"><span class="init-hovercard"
+				   
+						data-user-title="tomconrad"
+				      data-user-userurl="/public/people/tomconrad"
+						  
+								  data-user-cardimgsrc="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/objects/user/empty_profile_64by64.png"
+							  
+				      data-user-detailshtml='<div class="subtitle">Thomas Conrad</div><strong>810</strong> 유명도 점수<div class="gray-text"></div>'><a 
+				                                          href="/public/people/tomconrad">tomconrad</a></span>
+			마지막으로 수정한 사람</span>
+				<span class="timestamp value" data-date="2017. 12. 11" data-time="오후 9:11" rel="tooltip" title="2017년 12월 11일 (월) 오후 9:11:24 (GMT+0000)">
+					2017-12-11T21:11:24Z</span>
+			</span>
+<div class="title wbr">
+					<i class="asprite_type_bug" alt="버그" title="버그"></i>
+<h3>java.lang.ClassCastException when trying to connect to MySQL DB on non-standard port (?)</h3>
+					<br/>
+					</div>
+			</div>
+			<div class="meta-info">
+				<div class="row">
+					<div class="span3">
+						<table class="issue-meta-table">
+							<tbody>
+							<tr>
+								<td class="label-text">
+									<span class="gray-text">개발</span>
+								</td>
+								<td>
+									</td>
+							</tr>
+							<tr>
+								<td class="label-text">
+									<span class="gray-text">QA</span>
+								</td>
+								<td>
+									</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="span3-hack">
+						<table class="issue-meta-table">
+							<tbody>
+							<tr>
+								<td class="label-text align-right">
+									<span class="gray-text">우선 순위</span>
+								</td>
+								<td>
+									<i class="asprite_priority_minor" alt="비주류" title="비주류"></i>
+비주류</td>
+							</tr>
+							<tr>
+								<td class="label-text align-right">
+									<span class="gray-text">복잡성 </span>
+								</td>
+								<td>
+									<i class="asprite_complexity_unknown" alt="모름" title="모름"></i>
+모름</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="span3">
+						<table class="issue-meta-table">
+							<tbody>
+							<tr>
+								<td class="label-text align-right">
+									<span class="gray-text">구성 요소 </span>
+								</td>
+								<td>
+										DB - MySQL</td>
+							</tr>
+							<tr>
+								<td class="label-text align-right">
+									<span class="gray-text">버전</span>
+								</td>
+								<td>
+									18.5</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="view-object-content user-content">
+					<p>
+	When I try to connect to a MySQL DB I get a java.lang.ClassCastException. In particular a MySQL DB listening on port 3301.&nbsp;</p>
+<p>
+	See attached for system info. Stack trace below. I can connect from MySQL Workbench. I have successfully connected to other MySQL DBs on port 3306. I encountered this on version 16.04, which is what I am licensed for, so I dl'd 18.5 and installed it to try to duplicate, and I did. So this 18.5 installation is brand new, this was the first connection I tried.</p>
+<div>
+	java.sql.SQLException: java.lang.ClassCastException: java.math.BigInteger cannot be cast to java.lang.Long</div>
+<div>
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1078)</div>
+<div>
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:989)</div>
+<div>
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:975)</div>
+<div>
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:920)</div>
+<div>
+	at com.mysql.jdbc.ConnectionImpl.buildCollationMapping(ConnectionImpl.java:1074)</div>
+<div>
+	at com.mysql.jdbc.ConnectionImpl.initializePropsFromServer(ConnectionImpl.java:3590)</div>
+<div>
+	at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2531)</div>
+<div>
+	at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2301)</div>
+<div>
+	at com.mysql.jdbc.ConnectionImpl.&lt;init&gt;(ConnectionImpl.java:834)</div>
+<div>
+	at com.mysql.jdbc.JDBC4Connection.&lt;init&gt;(JDBC4Connection.java:47)</div>
+<div>
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)</div>
+<div>
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)</div>
+<div>
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)</div>
+<div>
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)</div>
+<div>
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)</div>
+<div>
+	at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:416)</div>
+<div>
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:317)</div>
+<div>
+	at \\.\\.\\हि&ntilde;&ccedil;&ecirc;Čάй語简�?한\\.h⢋ᡃꃭ⢝.b(Unknown Source)</div>
+<div>
+	at \\.\\.\\हि&ntilde;&ccedil;&ecirc;Čάй語简�?한\\.nꊾ⢋⢐ꊧ6switch.id(Unknown Source)</div>
+<div>
+	at \\.\\.\\हि&ntilde;&ccedil;&ecirc;Čάй語简�?한\\.nꊾ⢋⢐ꊧ6switch.s(Unknown Source)</div>
+<div>
+	at \\.\\.\\हि&ntilde;&ccedil;&ecirc;Čάй語简�?한\\.nꊾ⢋⢐ꊧ6switch.getConnection(Unknown Source)</div>
+<div>
+	at \\.\\.\\हि&ntilde;&ccedil;&ecirc;Čάй語简�?한\\.nꊾ⢋⢐ꊧ6switch.getConnection(Unknown Source)</div>
+<div>
+	at \\.\\.\\हि&ntilde;&ccedil;&ecirc;Čάй語简�?한\\.mꆮꁖ̯ꌽbreak.dN(Unknown Source)</div>
+<div>
+	at \\.\\.\\हि&ntilde;&ccedil;&ecirc;Čάй語简�?한\\.Kᠼꇳᠴᛠfloatthrow$2.process(Unknown Source)</div>
+<div>
+	at com.common.ui.util.BackgroundThread.run(Unknown Source)</div>
+<div>
+	Caused by: java.lang.ClassCastException: java.math.BigInteger cannot be cast to java.lang.Long</div>
+<div>
+	at com.mysql.jdbc.ConnectionImpl.buildCollationMapping(ConnectionImpl.java:1019)</div>
+<div>
+	... 20 more</div>
+<div>
+	&nbsp;</div>
+<div>
+	&nbsp;</div>
+</div>
+			<div class="row">
+				<div class="span5 view-object-subsection">
+					<h6 id="attachmentHeading">8 첨부물</h6>
+						</div>
+			</div>
+			<div class="view-object-subsection" id="listAttachmentSection">
+				<div id="44CBAD87-43E5-4E22-8661-38AF4E28D0B7_attachments">
+		<ul class="thumbnails">
+			<li id="2478947D-CC03-41A9-C27C-F478453C87D3" >
+	<div class="thumbnail">
+			<table><tbody><tr><td>
+			<img class="cursor-pointer" src="/app/home/project/public/aquadatastudio/issue/15497/attachment/2478947D-CC03-41A9-C27C-F478453C87D3-thumb/MySQL-DB-properties-PNG" title="MySQL DB properties.PNG" alt="MySQL DB properties.PNG"
+						  onclick="window.open('/app/home/project/public/aquadatastudio/issue/15497/attachment/2478947D-CC03-41A9-C27C-F478453C87D3/MySQL-DB-properties-PNG')">
+			</td></tr></tbody></table>
+		</div>
+	<div class="caption" title="MySQL DB properties.PNG"><a id="2478947D-CC03-41A9-C27C-F478453C87D3_link" href="/app/home/project/public/aquadatastudio/issue/15497/attachment/2478947D-CC03-41A9-C27C-F478453C87D3/MySQL-DB-properties-PNG"
+			target="_blank">MySQL DB properties.PNG</a></div>
+	<p class="creator">
+			<span class="timestamp value" data-date="2017. 12. 7" data-time="오후 9:25" rel="tooltip" title="2017년 12월 7일 (목) 오후 9:25:02 (GMT+0000)">
+			2017-12-07T21:25:02Z</span>
+		</p>
+	<p>
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+            
+            
+                <span style="font: inherit; white-space: pre;" title="53,573 B">52 KB</span>
+            
+        
+    
+
+</p>
+	</li>
+<li id="30D0D0E5-6B24-BEE4-3570-91FC8F0099F9" >
+	<div class="thumbnail">
+			<table><tbody><tr><td>
+			<img class="cursor-pointer" src="/app/home/project/public/aquadatastudio/issue/15497/attachment/30D0D0E5-6B24-BEE4-3570-91FC8F0099F9-thumb/Aqua-Info-4-PNG" title="Aqua Info 4.PNG" alt="Aqua Info 4.PNG"
+						  onclick="window.open('/app/home/project/public/aquadatastudio/issue/15497/attachment/30D0D0E5-6B24-BEE4-3570-91FC8F0099F9/Aqua-Info-4-PNG')">
+			</td></tr></tbody></table>
+		</div>
+	<div class="caption" title="Aqua Info 4.PNG"><a id="30D0D0E5-6B24-BEE4-3570-91FC8F0099F9_link" href="/app/home/project/public/aquadatastudio/issue/15497/attachment/30D0D0E5-6B24-BEE4-3570-91FC8F0099F9/Aqua-Info-4-PNG"
+			target="_blank">Aqua Info 4.PNG</a></div>
+	<p class="creator">
+			<span class="timestamp value" data-date="2017. 12. 7" data-time="오후 9:25" rel="tooltip" title="2017년 12월 7일 (목) 오후 9:25:02 (GMT+0000)">
+			2017-12-07T21:25:02Z</span>
+		</p>
+	<p>
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+            
+            
+                <span style="font: inherit; white-space: pre;" title="36,464 B">36 KB</span>
+            
+        
+    
+
+</p>
+	</li>
+<li id="4A90A863-92E8-66EA-96D9-4D56DFE65DF4" >
+	<div class="thumbnail">
+			<table><tbody><tr><td>
+			<img class="cursor-pointer" src="/app/home/project/public/aquadatastudio/issue/15497/attachment/4A90A863-92E8-66EA-96D9-4D56DFE65DF4-thumb/Aqua-Info-2-PNG" title="Aqua Info 2.PNG" alt="Aqua Info 2.PNG"
+						  onclick="window.open('/app/home/project/public/aquadatastudio/issue/15497/attachment/4A90A863-92E8-66EA-96D9-4D56DFE65DF4/Aqua-Info-2-PNG')">
+			</td></tr></tbody></table>
+		</div>
+	<div class="caption" title="Aqua Info 2.PNG"><a id="4A90A863-92E8-66EA-96D9-4D56DFE65DF4_link" href="/app/home/project/public/aquadatastudio/issue/15497/attachment/4A90A863-92E8-66EA-96D9-4D56DFE65DF4/Aqua-Info-2-PNG"
+			target="_blank">Aqua Info 2.PNG</a></div>
+	<p class="creator">
+			<span class="timestamp value" data-date="2017. 12. 7" data-time="오후 9:25" rel="tooltip" title="2017년 12월 7일 (목) 오후 9:25:02 (GMT+0000)">
+			2017-12-07T21:25:02Z</span>
+		</p>
+	<p>
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+            
+            
+                <span style="font: inherit; white-space: pre;" title="106,825 B">104 KB</span>
+            
+        
+    
+
+</p>
+	</li>
+<li id="BB24ACC5-E655-CB50-E576-6BD605E944FE" >
+	<div class="thumbnail">
+			<table><tbody><tr><td>
+			<img class="cursor-pointer" src="/app/home/project/public/aquadatastudio/issue/15497/attachment/BB24ACC5-E655-CB50-E576-6BD605E944FE-thumb/Aqua-info-3-PNG" title="Aqua info 3.PNG" alt="Aqua info 3.PNG"
+						  onclick="window.open('/app/home/project/public/aquadatastudio/issue/15497/attachment/BB24ACC5-E655-CB50-E576-6BD605E944FE/Aqua-info-3-PNG')">
+			</td></tr></tbody></table>
+		</div>
+	<div class="caption" title="Aqua info 3.PNG"><a id="BB24ACC5-E655-CB50-E576-6BD605E944FE_link" href="/app/home/project/public/aquadatastudio/issue/15497/attachment/BB24ACC5-E655-CB50-E576-6BD605E944FE/Aqua-info-3-PNG"
+			target="_blank">Aqua info 3.PNG</a></div>
+	<p class="creator">
+			<span class="timestamp value" data-date="2017. 12. 7" data-time="오후 9:25" rel="tooltip" title="2017년 12월 7일 (목) 오후 9:25:02 (GMT+0000)">
+			2017-12-07T21:25:02Z</span>
+		</p>
+	<p>
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+            
+            
+                <span style="font: inherit; white-space: pre;" title="31,983 B">31 KB</span>
+            
+        
+    
+
+</p>
+	</li>
+<li id="E828112D-6CE9-D1B6-853A-FF5999400E34" >
+	<div class="thumbnail">
+			<table><tbody><tr><td>
+			<img class="cursor-pointer" src="/app/home/project/public/aquadatastudio/issue/15497/attachment/E828112D-6CE9-D1B6-853A-FF5999400E34-thumb/Aqua-info-1-PNG" title="Aqua info 1.PNG" alt="Aqua info 1.PNG"
+						  onclick="window.open('/app/home/project/public/aquadatastudio/issue/15497/attachment/E828112D-6CE9-D1B6-853A-FF5999400E34/Aqua-info-1-PNG')">
+			</td></tr></tbody></table>
+		</div>
+	<div class="caption" title="Aqua info 1.PNG"><a id="E828112D-6CE9-D1B6-853A-FF5999400E34_link" href="/app/home/project/public/aquadatastudio/issue/15497/attachment/E828112D-6CE9-D1B6-853A-FF5999400E34/Aqua-info-1-PNG"
+			target="_blank">Aqua info 1.PNG</a></div>
+	<p class="creator">
+			<span class="timestamp value" data-date="2017. 12. 7" data-time="오후 9:25" rel="tooltip" title="2017년 12월 7일 (목) 오후 9:25:02 (GMT+0000)">
+			2017-12-07T21:25:02Z</span>
+		</p>
+	<p>
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+            
+            
+                <span style="font: inherit; white-space: pre;" title="49,982 B">49 KB</span>
+            
+        
+    
+
+</p>
+	</li>
+<li id="0B81E8B8-E14B-0910-E86F-2C3CBFB01413" >
+	<div class="thumbnail">
+			<table><tbody><tr><td>
+			<img class="cursor-pointer" src="/app/home/project/public/aquadatastudio/issue/15497/attachment/0B81E8B8-E14B-0910-E86F-2C3CBFB01413-thumb/MySQL-info-PNG" title="MySQL info.PNG" alt="MySQL info.PNG"
+						  onclick="window.open('/app/home/project/public/aquadatastudio/issue/15497/attachment/0B81E8B8-E14B-0910-E86F-2C3CBFB01413/MySQL-info-PNG')">
+			</td></tr></tbody></table>
+		</div>
+	<div class="caption" title="MySQL info.PNG"><a id="0B81E8B8-E14B-0910-E86F-2C3CBFB01413_link" href="/app/home/project/public/aquadatastudio/issue/15497/attachment/0B81E8B8-E14B-0910-E86F-2C3CBFB01413/MySQL-info-PNG"
+			target="_blank">MySQL info.PNG</a></div>
+	<p class="creator">
+			<span class="timestamp value" data-date="2017. 12. 9" data-time="오전 3:33" rel="tooltip" title="2017년 12월 9일 (토) 오전 3:33:47 (GMT+0000)">
+			2017-12-09T03:33:47Z</span>
+		</p>
+	<p>
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+            
+            
+                <span style="font: inherit; white-space: pre;" title="93,936 B">92 KB</span>
+            
+        
+    
+
+</p>
+	</li>
+<li id="2D8C5851-AFF2-BF6D-065F-AB891EF52BEE" >
+	<div class="thumbnail">
+			<table><tbody><tr><td>
+			<img class="cursor-pointer" src="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/attachment-placeholder.png" title="datastudioV18.log" alt="datastudioV18.log"
+						  onclick="parent.location='/app/home/project/public/aquadatastudio/issue/15497/attachment/2D8C5851-AFF2-BF6D-065F-AB891EF52BEE/datastudioV18-log'">
+			</td></tr></tbody></table>
+		</div>
+	<div class="caption" title="datastudioV18.log"><a id="2D8C5851-AFF2-BF6D-065F-AB891EF52BEE_link" href="/app/home/project/public/aquadatastudio/issue/15497/attachment/2D8C5851-AFF2-BF6D-065F-AB891EF52BEE/datastudioV18-log"
+			>datastudioV18.log</a></div>
+	<p class="creator">
+			<span class="timestamp value" data-date="2017. 12. 9" data-time="오전 3:33" rel="tooltip" title="2017년 12월 9일 (토) 오전 3:33:47 (GMT+0000)">
+			2017-12-09T03:33:47Z</span>
+		</p>
+	<p>
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+            
+            
+                <span style="font: inherit; white-space: pre;" title="27,449 B">27 KB</span>
+            
+        
+    
+
+</p>
+	</li>
+<li id="AFB54BEF-0949-196D-B057-3B49A8EE3FBB" >
+	<div class="thumbnail">
+			<table><tbody><tr><td>
+			<img class="cursor-pointer" src="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/attachment-placeholder.png" title="datastudio16.log.1" alt="datastudio16.log.1"
+						  onclick="parent.location='/app/home/project/public/aquadatastudio/issue/15497/attachment/AFB54BEF-0949-196D-B057-3B49A8EE3FBB/datastudio16-log-1'">
+			</td></tr></tbody></table>
+		</div>
+	<div class="caption" title="datastudio16.log.1"><a id="AFB54BEF-0949-196D-B057-3B49A8EE3FBB_link" href="/app/home/project/public/aquadatastudio/issue/15497/attachment/AFB54BEF-0949-196D-B057-3B49A8EE3FBB/datastudio16-log-1"
+			>datastudio16.log.1</a></div>
+	<p class="creator">
+			<span class="timestamp value" data-date="2017. 12. 9" data-time="오전 3:33" rel="tooltip" title="2017년 12월 9일 (토) 오전 3:33:47 (GMT+0000)">
+			2017-12-09T03:33:47Z</span>
+		</p>
+	<p>
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+            
+            
+                <span style="font: inherit; white-space: pre;" title="312,228 B">305 KB</span>
+            
+        
+    
+
+</p>
+	</li>
+</ul>
+	</div>
+</div>
+			<div class="action-footer">
+				<div class="row">
+					<div class="span4">
+						<ul class="action-items">
+							<li>&nbsp;</li>
+							</ul>
+					</div>
+					<div class="span4 pull-right">
+						<ul class="action-items pull-right" id="44CBAD87-43E5-4E22-8661-38AF4E28D0B7_like_follow_count">
+	<li class="border-left">&nbsp;</li>
+	<li>
+		<span onclick="showSharesDialog(this, 15497)" rel="tooltip" data-allow="false"
+			   id="44CBAD87-43E5-4E22-8661-38AF4E28D0B7_follow_count">공유내용 없음</span>
+		</li>
+	<li>&nbsp;</li>
+</ul>
+</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="viewIssueAddendum">
+	<!--Tab header Row-->
+	<div class="row">
+		<div class="offset1 span9">
+			<div class="tab-header">
+				<div class="row">
+					<div class="span7">
+						<div class="btn-group">
+							<a id="issueActivitiesAllTab" href="/app/home/project/public/aquadatastudio/issue/15497?sort=asc&amp;tab=all" class="btn">모두</a>
+							<a id="issueActivitiesCommentTab" href="/app/home/project/public/aquadatastudio/issue/15497?sort=asc&amp;tab=comment"
+							   class="btn tab-active">코멘트&nbsp;(<span id="activityHeaderCount">6</span>)</a>
+							<a id="issueActivitiesChangeLogTab" href="/app/home/project/public/aquadatastudio/issue/15497?sort=asc&amp;tab=changelog"
+							   class="btn">변경 히스토리</a>
+						</div>
+					</div>
+					<div class="span2 pull-right">
+						<div class="btn-group pull-right">
+							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+									정렬&nbsp;<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/app/home/project/public/aquadatastudio/issue/15497?sort=desc&amp;tab=comment"><i
+										  class="icon-holder"></i>&nbsp;마지막 수정 (가장 최근것)</a></li>
+								<li><a href="/app/home/project/public/aquadatastudio/issue/15497?sort=asc&amp;tab=comment"><i
+										  class="icon-ok"></i>&nbsp;마지막 수정 (가장 오래된것)</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="issueActivityList">
+<!--comment row-->
+<div class="row jump-link" id="29768229-5CBF-B48C-2720-BC9707382AE9" >
+	<div class="span1 align-right">
+		<a id="49902750" class="poster" href="/app/profile/tomconrad">
+			<div class="size-medium centered-image" style="display:inline-block">
+	<img  class="centered-image" src="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/objects/user/empty_profile_48by48.png" alt="Thomas Conrad"/>
+		</div>
+</a>
+	</div>
+	<div class="span9">
+		<div class="view-object-card">
+			<div class="view-object-header">
+				<span class="creator">
+	<b>
+		<span class="init-hovercard"
+				   data-user-link2="#49902750"
+						data-user-title="tomconrad"
+				      data-user-userurl="/public/people/tomconrad"
+						  
+								  data-user-cardimgsrc="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/objects/user/empty_profile_64by64.png"
+							  
+				      data-user-detailshtml='<div class="subtitle">Thomas Conrad</div><strong>810</strong> 유명도 점수<div class="gray-text"></div>'><a 
+				                                          href="/public/people/tomconrad">tomconrad</a></span>
+			</b>
+	
+	&nbsp;
+	<span rel="tooltip" title="2017년 12월 8일 (금) 오후 10:46:28 (GMT+0000)"  >
+		<span class="timestamp" data-date="2017. 12. 8" data-time="오후 10:46">
+			2017-12-08T22:46:28Z</span>
+	</span>
+	</span>
+</div>
+			<div class="view-comment-body user-content" id="29768229-5CBF-B48C-2720-BC9707382AE9-view">
+				<p>
+	Hi Tom,</p>
+<p>
+	What version of MySQL are you using? Looks like you are using Ubuntu for an OS? Would you also attach the log files found in&nbsp;&lt;USER_HOME&gt;\.datastudio\logs.&nbsp;</p>
+<p>
+	Thanks, Tom</p>
+<p>
+	&nbsp;</p>
+</div>
+			<span id="29768229-5CBF-B48C-2720-BC9707382AE9_comment" class="hidden"><p>
+	Hi Tom,</p>
+<p>
+	What version of MySQL are you using? Looks like you are using Ubuntu for an OS? Would you also attach the log files found in&nbsp;&lt;USER_HOME&gt;\.datastudio\logs.&nbsp;</p>
+<p>
+	Thanks, Tom</p>
+<p>
+	&nbsp;</p>
+</span>
+			<div class="action-footer">
+				<ul class="action-items">
+					<li>&nbsp;</li>
+					<li>
+						<a class="action-link" href="https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497?tab=comment#29768229-5CBF-B48C-2720-BC9707382AE9" title="이 코멘트에 영구적 링크하기" onclick="app.showPermalinkDialog('29768229-5CBF-B48C-2720-BC9707382AE9', '이 코멘트에 영구적 링크하기'); return false;"
+   rel="tooltip">링크</a>
+<div class="hide" id="permalink-content-29768229-5CBF-B48C-2720-BC9707382AE9">
+	<div class="permalink">
+		<form data-focus="permalink-text-29768229-5CBF-B48C-2720-BC9707382AE9">
+			<fieldset class="control-group">
+				<label class="control-label" for="permalink-text-29768229-5CBF-B48C-2720-BC9707382AE9">이 코멘트 링크 공유하기</label>
+				<input class="span6 input-xlarge readonly" id="permalink-text-29768229-5CBF-B48C-2720-BC9707382AE9" type="text" value="https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497?tab=comment#29768229-5CBF-B48C-2720-BC9707382AE9" readonly="readonly">
+			</fieldset>
+		</form>
+	</div>
+</div>
+</li>
+				</ul>
+				<ul class="action-items pull-right" id="29768229-5CBF-B48C-2720-BC9707382AE9_like_count">
+	</ul>
+</div>
+		</div>
+	</div>
+</div>
+<!--comment row-->
+<div class="row jump-link" id="693E6483-B244-2EA9-FCD3-BFB71455756E" >
+	<div class="span1 align-right">
+		<a id="49902751" class="poster" href="/app/profile/tspitzer">
+			<div class="size-medium centered-image" style="display:inline-block">
+	<img  class="centered-image" src="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/objects/user/empty_profile_48by48.png" alt="Tom Spitzer"/>
+		</div>
+</a>
+	</div>
+	<div class="span9">
+		<div class="view-object-card">
+			<div class="view-object-header">
+				<span class="creator">
+	<b>
+		<span class="init-hovercard"
+				   data-user-link2="#49902751"
+						data-user-title="tspitzer"
+				      data-user-userurl="/public/people/tspitzer"
+						  
+								  data-user-cardimgsrc="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/objects/user/empty_profile_64by64.png"
+							  
+				      data-user-detailshtml='<div class="subtitle">Tom Spitzer</div><strong>1</strong> 유명도 점수<div class="gray-text"></div>'><a 
+				                                          href="/public/people/tspitzer">tspitzer</a></span>
+			</b>
+	
+	&nbsp;
+	<span rel="tooltip" title="2017년 12월 9일 (토) 오전 3:33:04 (GMT+0000)"  >
+		<span class="timestamp" data-date="2017. 12. 9" data-time="오전 3:33">
+			2017-12-09T03:33:04Z</span>
+	</span>
+	</span>
+</div>
+			<div class="view-comment-body user-content" id="693E6483-B244-2EA9-FCD3-BFB71455756E-view">
+				<p>
+	I'm attaching the version info shown in MySQL Workbench. Also uploading two log files. One from DataStudio 16 on Win 7, the other from DataStudio 18.5 on Ubuntu 16.04.</p>
+</div>
+			<span id="693E6483-B244-2EA9-FCD3-BFB71455756E_comment" class="hidden"><p>
+	I'm attaching the version info shown in MySQL Workbench. Also uploading two log files. One from DataStudio 16 on Win 7, the other from DataStudio 18.5 on Ubuntu 16.04.</p>
+</span>
+			<div class="action-footer">
+				<ul class="action-items">
+					<li>&nbsp;</li>
+					<li>
+						<a class="action-link" href="https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497?tab=comment#693E6483-B244-2EA9-FCD3-BFB71455756E" title="이 코멘트에 영구적 링크하기" onclick="app.showPermalinkDialog('693E6483-B244-2EA9-FCD3-BFB71455756E', '이 코멘트에 영구적 링크하기'); return false;"
+   rel="tooltip">링크</a>
+<div class="hide" id="permalink-content-693E6483-B244-2EA9-FCD3-BFB71455756E">
+	<div class="permalink">
+		<form data-focus="permalink-text-693E6483-B244-2EA9-FCD3-BFB71455756E">
+			<fieldset class="control-group">
+				<label class="control-label" for="permalink-text-693E6483-B244-2EA9-FCD3-BFB71455756E">이 코멘트 링크 공유하기</label>
+				<input class="span6 input-xlarge readonly" id="permalink-text-693E6483-B244-2EA9-FCD3-BFB71455756E" type="text" value="https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497?tab=comment#693E6483-B244-2EA9-FCD3-BFB71455756E" readonly="readonly">
+			</fieldset>
+		</form>
+	</div>
+</div>
+</li>
+				</ul>
+				<ul class="action-items pull-right" id="693E6483-B244-2EA9-FCD3-BFB71455756E_like_count">
+	</ul>
+</div>
+		</div>
+	</div>
+</div>
+<!--comment row-->
+<div class="row jump-link" id="54854021-5AD2-9594-D7C2-FA11C1E8D7FE" >
+	<div class="span1 align-right">
+		<a id="49902752" class="poster" href="/app/profile/tomconrad">
+			<div class="size-medium centered-image" style="display:inline-block">
+	<img  class="centered-image" src="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/objects/user/empty_profile_48by48.png" alt="Thomas Conrad"/>
+		</div>
+</a>
+	</div>
+	<div class="span9">
+		<div class="view-object-card">
+			<div class="view-object-header">
+				<span class="creator">
+	<b>
+		<span class="init-hovercard"
+				   data-user-link2="#49902752"
+						data-user-title="tomconrad"
+				      data-user-userurl="/public/people/tomconrad"
+						  
+								  data-user-cardimgsrc="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/objects/user/empty_profile_64by64.png"
+							  
+				      data-user-detailshtml='<div class="subtitle">Thomas Conrad</div><strong>810</strong> 유명도 점수<div class="gray-text"></div>'><a 
+				                                          href="/public/people/tomconrad">tomconrad</a></span>
+			</b>
+	
+	&nbsp;
+	<span rel="tooltip" title="2017년 12월 11일 (월) 오후 6:58:30 (GMT+0000)"  >
+		<span class="timestamp" data-date="2017. 12. 11" data-time="오후 6:58">
+			2017-12-11T18:58:30Z</span>
+	</span>
+	</span>
+</div>
+			<div class="view-comment-body user-content" id="54854021-5AD2-9594-D7C2-FA11C1E8D7FE-view">
+				<p>
+	Hi Tom,</p>
+<p>
+	It looks like you are using version 8 of MySQL. Aqua Data Studio does not support that version yet. However, you can try downloading the latest MySQL jdbc driver 5.1.45 and installing it in \datastudio\lib\drivers directory.</p>
+<p>
+	Exit out of Aqua Data Studio first and remember to remove the current mysql.jar file. Store it in a safe place in case you need to add it back in. Re-start Aqua Data Studio.</p>
+<p>
+	Keep in mind, that we have not tested with the latest MySQL driver.</p>
+<p>
+	Hope that helps,</p>
+<p>
+	Tom</p>
+<p>
+	&nbsp;</p>
+<p>
+	&nbsp;</p>
+</div>
+			<span id="54854021-5AD2-9594-D7C2-FA11C1E8D7FE_comment" class="hidden"><p>
+	Hi Tom,</p>
+<p>
+	It looks like you are using version 8 of MySQL. Aqua Data Studio does not support that version yet. However, you can try downloading the latest MySQL jdbc driver 5.1.45 and installing it in \datastudio\lib\drivers directory.</p>
+<p>
+	Exit out of Aqua Data Studio first and remember to remove the current mysql.jar file. Store it in a safe place in case you need to add it back in. Re-start Aqua Data Studio.</p>
+<p>
+	Keep in mind, that we have not tested with the latest MySQL driver.</p>
+<p>
+	Hope that helps,</p>
+<p>
+	Tom</p>
+<p>
+	&nbsp;</p>
+<p>
+	&nbsp;</p>
+</span>
+			<div class="action-footer">
+				<ul class="action-items">
+					<li>&nbsp;</li>
+					<li>
+						<a class="action-link" href="https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497?tab=comment#54854021-5AD2-9594-D7C2-FA11C1E8D7FE" title="이 코멘트에 영구적 링크하기" onclick="app.showPermalinkDialog('54854021-5AD2-9594-D7C2-FA11C1E8D7FE', '이 코멘트에 영구적 링크하기'); return false;"
+   rel="tooltip">링크</a>
+<div class="hide" id="permalink-content-54854021-5AD2-9594-D7C2-FA11C1E8D7FE">
+	<div class="permalink">
+		<form data-focus="permalink-text-54854021-5AD2-9594-D7C2-FA11C1E8D7FE">
+			<fieldset class="control-group">
+				<label class="control-label" for="permalink-text-54854021-5AD2-9594-D7C2-FA11C1E8D7FE">이 코멘트 링크 공유하기</label>
+				<input class="span6 input-xlarge readonly" id="permalink-text-54854021-5AD2-9594-D7C2-FA11C1E8D7FE" type="text" value="https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497?tab=comment#54854021-5AD2-9594-D7C2-FA11C1E8D7FE" readonly="readonly">
+			</fieldset>
+		</form>
+	</div>
+</div>
+</li>
+				</ul>
+				<ul class="action-items pull-right" id="54854021-5AD2-9594-D7C2-FA11C1E8D7FE_like_count">
+	</ul>
+</div>
+		</div>
+	</div>
+</div>
+<!--comment row-->
+<div class="row jump-link" id="11C59E35-36D8-7FD4-6728-E4B48350EA83" >
+	<div class="span1 align-right">
+		<a id="49902753" class="poster" href="/app/profile/tspitzer">
+			<div class="size-medium centered-image" style="display:inline-block">
+	<img  class="centered-image" src="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/objects/user/empty_profile_48by48.png" alt="Tom Spitzer"/>
+		</div>
+</a>
+	</div>
+	<div class="span9">
+		<div class="view-object-card">
+			<div class="view-object-header">
+				<span class="creator">
+	<b>
+		<span class="init-hovercard"
+				   data-user-link2="#49902753"
+						data-user-title="tspitzer"
+				      data-user-userurl="/public/people/tspitzer"
+						  
+								  data-user-cardimgsrc="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/objects/user/empty_profile_64by64.png"
+							  
+				      data-user-detailshtml='<div class="subtitle">Tom Spitzer</div><strong>1</strong> 유명도 점수<div class="gray-text"></div>'><a 
+				                                          href="/public/people/tspitzer">tspitzer</a></span>
+			</b>
+	
+	&nbsp;
+	<span rel="tooltip" title="2017년 12월 11일 (월) 오후 7:40:21 (GMT+0000)"  >
+		<span class="timestamp" data-date="2017. 12. 11" data-time="오후 7:40">
+			2017-12-11T19:40:21Z</span>
+	</span>
+	</span>
+</div>
+			<div class="view-comment-body user-content" id="11C59E35-36D8-7FD4-6728-E4B48350EA83-view">
+				<p>
+	Thanks Tom. That actually worked!</p>
+<p>
+	I was wondering about it being version 8 when I sent you the screenshot the other day, as in whether that was the source of the problem, and why we had decided to use it. Normally we use 5.7 lately.&nbsp;</p>
+<p>
+	Regards,</p>
+<p>
+	Tom Spitzer</p>
+</div>
+			<span id="11C59E35-36D8-7FD4-6728-E4B48350EA83_comment" class="hidden"><p>
+	Thanks Tom. That actually worked!</p>
+<p>
+	I was wondering about it being version 8 when I sent you the screenshot the other day, as in whether that was the source of the problem, and why we had decided to use it. Normally we use 5.7 lately.&nbsp;</p>
+<p>
+	Regards,</p>
+<p>
+	Tom Spitzer</p>
+</span>
+			<div class="action-footer">
+				<ul class="action-items">
+					<li>&nbsp;</li>
+					<li>
+						<a class="action-link" href="https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497?tab=comment#11C59E35-36D8-7FD4-6728-E4B48350EA83" title="이 코멘트에 영구적 링크하기" onclick="app.showPermalinkDialog('11C59E35-36D8-7FD4-6728-E4B48350EA83', '이 코멘트에 영구적 링크하기'); return false;"
+   rel="tooltip">링크</a>
+<div class="hide" id="permalink-content-11C59E35-36D8-7FD4-6728-E4B48350EA83">
+	<div class="permalink">
+		<form data-focus="permalink-text-11C59E35-36D8-7FD4-6728-E4B48350EA83">
+			<fieldset class="control-group">
+				<label class="control-label" for="permalink-text-11C59E35-36D8-7FD4-6728-E4B48350EA83">이 코멘트 링크 공유하기</label>
+				<input class="span6 input-xlarge readonly" id="permalink-text-11C59E35-36D8-7FD4-6728-E4B48350EA83" type="text" value="https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497?tab=comment#11C59E35-36D8-7FD4-6728-E4B48350EA83" readonly="readonly">
+			</fieldset>
+		</form>
+	</div>
+</div>
+</li>
+				</ul>
+				<ul class="action-items pull-right" id="11C59E35-36D8-7FD4-6728-E4B48350EA83_like_count">
+	</ul>
+</div>
+		</div>
+	</div>
+</div>
+<!--comment row-->
+<div class="row jump-link" id="358B001E-1116-5FF5-F66B-35593D3E49FC" >
+	<div class="span1 align-right">
+		<a id="49902754" class="poster" href="/app/profile/tspitzer">
+			<div class="size-medium centered-image" style="display:inline-block">
+	<img  class="centered-image" src="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/objects/user/empty_profile_48by48.png" alt="Tom Spitzer"/>
+		</div>
+</a>
+	</div>
+	<div class="span9">
+		<div class="view-object-card">
+			<div class="view-object-header">
+				<span class="creator">
+	<b>
+		<span class="init-hovercard"
+				   data-user-link2="#49902754"
+						data-user-title="tspitzer"
+				      data-user-userurl="/public/people/tspitzer"
+						  
+								  data-user-cardimgsrc="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/objects/user/empty_profile_64by64.png"
+							  
+				      data-user-detailshtml='<div class="subtitle">Tom Spitzer</div><strong>1</strong> 유명도 점수<div class="gray-text"></div>'><a 
+				                                          href="/public/people/tspitzer">tspitzer</a></span>
+			</b>
+	
+	&nbsp;
+	<span rel="tooltip" title="2017년 12월 11일 (월) 오후 7:40:21 (GMT+0000)"  >
+		<span class="timestamp" data-date="2017. 12. 11" data-time="오후 7:40">
+			2017-12-11T19:40:21Z</span>
+	</span>
+	</span>
+</div>
+			<div class="view-comment-body user-content" id="358B001E-1116-5FF5-F66B-35593D3E49FC-view">
+				<p>
+	Thanks Tom. That actually worked!</p>
+<p>
+	I was wondering about it being version 8 when I sent you the screenshot the other day, as in whether that was the source of the problem, and why we had decided to use it. Normally we use 5.7 lately.&nbsp;</p>
+<p>
+	Regards,</p>
+<p>
+	Tom Spitzer</p>
+</div>
+			<span id="358B001E-1116-5FF5-F66B-35593D3E49FC_comment" class="hidden"><p>
+	Thanks Tom. That actually worked!</p>
+<p>
+	I was wondering about it being version 8 when I sent you the screenshot the other day, as in whether that was the source of the problem, and why we had decided to use it. Normally we use 5.7 lately.&nbsp;</p>
+<p>
+	Regards,</p>
+<p>
+	Tom Spitzer</p>
+</span>
+			<div class="action-footer">
+				<ul class="action-items">
+					<li>&nbsp;</li>
+					<li>
+						<a class="action-link" href="https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497?tab=comment#358B001E-1116-5FF5-F66B-35593D3E49FC" title="이 코멘트에 영구적 링크하기" onclick="app.showPermalinkDialog('358B001E-1116-5FF5-F66B-35593D3E49FC', '이 코멘트에 영구적 링크하기'); return false;"
+   rel="tooltip">링크</a>
+<div class="hide" id="permalink-content-358B001E-1116-5FF5-F66B-35593D3E49FC">
+	<div class="permalink">
+		<form data-focus="permalink-text-358B001E-1116-5FF5-F66B-35593D3E49FC">
+			<fieldset class="control-group">
+				<label class="control-label" for="permalink-text-358B001E-1116-5FF5-F66B-35593D3E49FC">이 코멘트 링크 공유하기</label>
+				<input class="span6 input-xlarge readonly" id="permalink-text-358B001E-1116-5FF5-F66B-35593D3E49FC" type="text" value="https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497?tab=comment#358B001E-1116-5FF5-F66B-35593D3E49FC" readonly="readonly">
+			</fieldset>
+		</form>
+	</div>
+</div>
+</li>
+				</ul>
+				<ul class="action-items pull-right" id="358B001E-1116-5FF5-F66B-35593D3E49FC_like_count">
+	</ul>
+</div>
+		</div>
+	</div>
+</div>
+<!--comment row-->
+<div class="row jump-link" id="A810661E-B63E-16DF-7522-314C49EEF290" >
+	<div class="span1 align-right">
+		<a id="49902755" class="poster" href="/app/profile/tomconrad">
+			<div class="size-medium centered-image" style="display:inline-block">
+	<img  class="centered-image" src="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/objects/user/empty_profile_48by48.png" alt="Thomas Conrad"/>
+		</div>
+</a>
+	</div>
+	<div class="span9">
+		<div class="view-object-card">
+			<div class="view-object-header">
+				<span class="creator">
+	<b>
+		<span class="init-hovercard"
+				   data-user-link2="#49902755"
+						data-user-title="tomconrad"
+				      data-user-userurl="/public/people/tomconrad"
+						  
+								  data-user-cardimgsrc="/images/f5f323048f321b8b0590a300994d6ee0/icons/simple/objects/user/empty_profile_64by64.png"
+							  
+				      data-user-detailshtml='<div class="subtitle">Thomas Conrad</div><strong>810</strong> 유명도 점수<div class="gray-text"></div>'><a 
+				                                          href="/public/people/tomconrad">tomconrad</a></span>
+			</b>
+	
+	&nbsp;
+	<span rel="tooltip" title="2017년 12월 11일 (월) 오후 9:11:13 (GMT+0000)"  >
+		<span class="timestamp" data-date="2017. 12. 11" data-time="오후 9:11">
+			2017-12-11T21:11:13Z</span>
+	</span>
+	</span>
+</div>
+			<div class="view-comment-body user-content" id="A810661E-B63E-16DF-7522-314C49EEF290-view">
+				<p>
+	Hi Tom,</p>
+<p>
+	Good to hear. I will close this issue out.</p>
+<p>
+	Take care,</p>
+<p>
+	Tom</p>
+<p>
+	&nbsp;</p>
+</div>
+			<span id="A810661E-B63E-16DF-7522-314C49EEF290_comment" class="hidden"><p>
+	Hi Tom,</p>
+<p>
+	Good to hear. I will close this issue out.</p>
+<p>
+	Take care,</p>
+<p>
+	Tom</p>
+<p>
+	&nbsp;</p>
+</span>
+			<div class="action-footer">
+				<ul class="action-items">
+					<li>&nbsp;</li>
+					<li>
+						<a class="action-link" href="https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497?tab=comment#A810661E-B63E-16DF-7522-314C49EEF290" title="이 코멘트에 영구적 링크하기" onclick="app.showPermalinkDialog('A810661E-B63E-16DF-7522-314C49EEF290', '이 코멘트에 영구적 링크하기'); return false;"
+   rel="tooltip">링크</a>
+<div class="hide" id="permalink-content-A810661E-B63E-16DF-7522-314C49EEF290">
+	<div class="permalink">
+		<form data-focus="permalink-text-A810661E-B63E-16DF-7522-314C49EEF290">
+			<fieldset class="control-group">
+				<label class="control-label" for="permalink-text-A810661E-B63E-16DF-7522-314C49EEF290">이 코멘트 링크 공유하기</label>
+				<input class="span6 input-xlarge readonly" id="permalink-text-A810661E-B63E-16DF-7522-314C49EEF290" type="text" value="https://www.aquaclusters.com/app/home/project/public/aquadatastudio/issue/15497?tab=comment#A810661E-B63E-16DF-7522-314C49EEF290" readonly="readonly">
+			</fieldset>
+		</form>
+	</div>
+</div>
+</li>
+				</ul>
+				<ul class="action-items pull-right" id="A810661E-B63E-16DF-7522-314C49EEF290_like_count">
+	</ul>
+</div>
+		</div>
+	</div>
+</div>
+</div>
+<div class="row">
+		<div class="offset1 span9">
+			<div class="section-sign-up" >
+		<span class="btn create-account-btn" onclick="parent.location='/app/register/self-signup'">무료 계정 생성</span>&nbsp;<b>AquaClusters상의 이슈들에 참여하기.</b>&nbsp;계정을 이미 가지고 계십니까?&nbsp;<a href="/app/login?requestedUrl=%2Fapp%2Fhome%2Fproject%2Fpublic%2Faquadatastudio%2Fissue%2F15497">참여하시려면 로그인 하십시오</a>
+	</div>
+</div>
+	</div>
+	</div>
+</div>
+<!-- view issue sidebar -->
+<div class="span2">
+	<table class="issue-sidebar-table">
+	<tbody>
+	<tr>
+		<td class="id">
+			<h4>이슈 #<a
+					  href="/app/home/project/public/aquadatastudio/issue/15497">15497</a></h4>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<i class="asprite_status_closed" alt="닫힘" title="닫힘"></i>
+<span
+			  class="resolved-status-label">닫힘</span></td>
+	</tr>
+	<tr>
+			<td>
+				<i class="asprite_resolution_fixed" alt="고정" title="고정"></i>
+<span class="fixed-resolution-label">고정</span>
+			</td>
+		</tr>
+	<tr>
+			<td class="creator">
+				<span class="modified">해결됨</span>
+				<span class="timestamp value" data-date="2017. 12. 11" data-time="오후 9:11" rel="tooltip" title="2017년 12월 11일 (월) 오후 9:11:24 (GMT+0000)">
+				2017-12-11T21:11:24Z</span>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<table class="issue-sidebar-table">
+	<tbody>
+	<tr>
+		<td class="sep border">&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="sep">&nbsp;</td>
+	</tr>
+	<tr>
+		<td><h6>완료</h6></td>
+	</tr>
+	<tr>
+		<td>
+			<span class="gray-text">만료일이 없음</span>
+				</td>
+	</tr>
+	<tr>
+		<td>
+			<span class="gray-text">개정된 버전이 없음</span>
+				</td>
+	</tr>
+	<tr>
+		<td>
+			<span class="gray-text">예측 시간이 없음</span>
+				</td>
+	</tr>
+	</tbody>
+</table>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+	// Initialize cute time refresh rate and i18n
+	function resetCuteTime(selector) {
+		$j(selector).cuteTime({
+			refresh:20000, // every 20 seconds
+			time_ranges:[
+				{bound:Number.NEGATIVE_INFINITY, cuteness:'', unit_size:0, data:null},
+				{bound:0, cuteness:'지금', unit_size:0, data:null},
+				{bound:20 * 1000, cuteness:'몇 초 전', unit_size:0, data:null},
+				{bound:60 * 1000, cuteness:'일 분 전', unit_size:0, data:null},
+				{bound:60 * 1000 * 2, cuteness:'%CT% 분 전', unit_size:60 * 1000, data:null},
+				{bound:60 * 1000 * 60, cuteness:'한 시간 전', unit_size:0, data:null},
+				{bound:60 * 1000 * 60 * 2, cuteness:'%CT% 시간 전', unit_size:60 * 1000 * 60, data:null},
+				{bound:60 * 1000 * 60 * 24, cuteness:'어제 {0}시', unit_size:0, data:'time'},
+				{bound:getYesterdayStartRange(), cuteness:'{0}', unit_size:0, data:'date'},
+				{bound:Number.POSITIVE_INFINITY, cuteness:'{0}', unit_size:0, data:'date'}
+			]
+		});
+	}
+
+	/**
+	 * Derived from the following answer
+	 *
+	 * http://stackoverflow.com/a/8805724
+	 * @return {*}
+	 */
+	function getYesterdayStartRange() {
+		var userTimeOffset = 0;
+		var userTime = getUtcTimeInMillis() + userTimeOffset;
+		var yesterday = getYesterdaysStartDate(userTime);
+		var rangeInMillis = userTime - yesterday.getTime();
+//		console.log("Yesterday started: " + rangeInMillis / (60 * 60 * 1000) + " hours back from now");
+		return rangeInMillis;
+	}
+
+
+	function getUtcTimeInMillis() {
+		var now = new Date();
+		return now.getTime() + now.getTimezoneOffset() * 60000;
+	}
+
+	function getYesterdaysStartDate(userTime) {
+		var userDate = new Date(userTime);
+		userDate.setDate(userDate.getDate() - 1);
+		userDate.setHours(0);
+		userDate.setMinutes(0);
+		userDate.setSeconds(0);
+//		console.log("Browser time: " + new Date() + " , User time:" + new Date(userTime) + ", Yesterday User time: " + userDate);
+		return userDate;
+	}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/js/f5f323048f321b8b0590a300994d6ee0/v2/project/users.js"></script>
+<script type="text/javascript" src="/js/f5f323048f321b8b0590a300994d6ee0/v2/project/issues/issue.js"></script>
+<script type="text/javascript">
+	$j(document).ready(function() {
+		initIssue();
+	});
+	$j.extend(Application.prototype, {
+		projectUrl: '/app/home/project/public/aquadatastudio',
+		projectAjaxUrl: '/ajax/home/project/public/aquadatastudio'
+	});
+	app.setMsg('labelViewShares', '공유한 사람들 보기.');
+	app.setMsg('labelSeeMore', '더 보기');
+	app.setMsg('labelSeeLess', '덜 보기');
+	app.setMsg('labelNoAttachments', '첨부하실 파일이 선택되지 않았습니다.');
+	app.setMsg('labelDeleteAttachmentTitle', '첨부사항 삭제');
+	app.setMsg('labelDeleteAttachmentMsg', '이 첨부물을 삭제하시겠습니까?');
+	app.setMsg('labelDeleteAttachmentButton', '첨부사항 삭제');
+	app.setMsg('labelDeleteComment', '코멘트 삭제');
+	app.setMsg('labelDeleteCommentMsg', '이 코멘트를 삭제하시겠습니까?');
+	app.setMsg('labelCommentPermalink', '이 코멘트에 영구적 링크하기');
+	app.setMsg('labelClose', '닫기');
+	app.setMsg('labelDeleteIssue', '이슈 삭제');
+	app.setMsg('labelDeleteIssueMsg', '이 이슈를 삭제하시겠습니까?');
+	app.setMsg('labelAddComment', '코멘트 추가');
+	app.setMsg('labelDeleteLinkTitle', '링크 삭제');
+	app.setMsg('labelDeleteLinkMsg', '이 링크를 삭제하시겠습니까?');
+	app.setMsg('labelDeleteLink', '링크 삭제');
+</script>
+<div class="container-fluid">
+	<p class="bottombar">
+		<a href="/app/site/about-aquaclusters">AquaClusters 안내</a>
+		<a href="/app/site/privacy-policy">프라이버시보호 정책</a>
+		<a href="/app/site/support">지원</a>
+		<span title="build 558552018-May-31 04:24:31 PM">Version - 19.0.2-4</span>
+		<a href="http://www.aquafold.com">AquaFold, Inc</a>
+		<span>Copyright © 2007-2017 </span>
+	</p>
+</div>
+<script type="text/javascript" src="/js/f5f323048f321b8b0590a300994d6ee0/v2/app-util-and-lib.min.js"></script>
+		
+
+
+<script language="javascript">
+	window.CKEDITOR_BASEPATH = "/ckeditor/";
+</script>
+
+<script type="text/javascript" src="/js/f5f323048f321b8b0590a300994d6ee0/v2/editor.js"></script>
+<script type="text/javascript" src="/ckeditor/f5f323048f321b8b0590a300994d6ee0/ckeditor.js"></script>
+<script type="text/javascript" src="/ckeditor/f5f323048f321b8b0590a300994d6ee0/adapters/jquery.js"></script>
+
+<style type="text/css">
+.cke_skin_kama .cke_wrapper {
+   background-color: #e0ecff;
+}
+.cke_skin_kama .cke_dialog_body {
+   border: solid 1px gray;
+}
+.cke_skin_kama .cke_focus {
+	outline: 0;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+	-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+}
+.cke_skin_kama .cke_dialog .cke_dialog_body .cke_dialog_close_button {
+	background-image: url(/images/f5f323048f321b8b0590a300994d6ee0/icons/ckeditor/ckeditor-sprites.png);
+}
+.cke_skin_kama a.cke_dialog_ui_button {
+	background: transparent url(/images/f5f323048f321b8b0590a300994d6ee0/icons/ckeditor/ckeditor-sprites.png) repeat-x scroll 0 -1069px;
+}
+.cke_skin_kama a.cke_dialog_ui_button_ok span {
+	background: transparent url(/images/f5f323048f321b8b0590a300994d6ee0/icons/ckeditor/ckeditor-sprites.png) no-repeat scroll right -1219px;
+}
+.cke_skin_kama a.cke_dialog_ui_button_cancel span {
+	background: transparent url(/images/f5f323048f321b8b0590a300994d6ee0/icons/ckeditor/ckeditor-sprites.png) no-repeat scroll right -1245px;
+}
+span.cke_skin_kama {
+	border: 1px solid #ccc;
+   border-collapse:collapse;
+   padding:0px;
+}
+span.cke_skin_BootstrapCK-Skin, span.cke_skin_BootstrapCK-Skin:focus {
+	border: 1px solid #ccc;
+	border-collapse:collapse;
+	padding:5px;
+}
+.editor_focus {
+	outline: 0;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+	-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+}
+span.cke_dialog_ui_checkbox label {
+	display: inline;
+}
+</style></body>
+</html>
+<!-- [PAGE_COMPLETE] -->

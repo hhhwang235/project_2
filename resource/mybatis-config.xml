@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration 
+		  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+		  "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<typeAliases>
+		<typeAlias type="mybatis.dto.MemberDTO" alias="MemberDTO"/>
+		<typeAlias type="mybatis.dto.SearchDTO" alias="SearchDTO"/>
+		<typeAlias type="mybatis.dto.BoardDTO" alias="BoardDTO"/>
+		<typeAlias type="mybatis.dto.tblCommentDTO" alias="tblCommentDTO"/>
+		<typeAlias type="mybatis.dto.CartDTO" alias="CartDTO"/>
+		<typeAlias type="mybatis.dto.GoodsDTO" alias="GoodsDTO"/>
+		<typeAlias type="mybatis.dto.testDTO" alias="testDTO"/>
+		<typeAlias type="mybatis.dto.VisitantDTO" alias="VisitantDTO"/>
+		<typeAlias type="mybatis.dto.PortDTO" alias="PortDTO"/>
+		<typeAlias type="mybatis.dto.OrdersDTO" alias="OrdersDTO"/>
+		<typeAlias type="mybatis.dto.OrderDetailDTO" alias="OrderDetailDTO"/>
+		<typeAlias type="mybatis.dto.GradeDTO" alias="GradeDTO"/>
+		<typeAlias type="mybatis.dto.LatitudeLongitudeDTO" alias="LatitudeLongitudeDTO"/>
+		<typeAlias type="mybatis.dto.PortInfoDTO" alias="PortInfoDTO"/>
+		<typeAlias type="mybatis.dto.PortSelectDTO" alias="PortSelectDTO"/>
+	</typeAliases>
+<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://localhost:3306/project?serverTimezone=UTC" />
+				<property name="username" value="ghkdghgus" />
+				<property name="password" value="1234" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="mybatis/mapper/mybatis-mapper.xml" />
+	</mappers>
+</configuration>

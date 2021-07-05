@@ -1,0 +1,3 @@
+Oracle 'SCOTT','TEST' Password : oracle
+MySQL 'root' Password : mysql
+

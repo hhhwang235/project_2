@@ -1,0 +1,10 @@
+@charset "utf-8";
+
+.header{
+	width: 100px;
+	height: 80px;
+	font-family: Nanum Gothic;
+	background-color:#ffffff;
+	font-size: 20px;
+	border:0 solid;
+}
